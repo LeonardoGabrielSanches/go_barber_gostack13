@@ -24,6 +24,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
 
 ## 🗂 Como baixar o projeto
 
+# Backend
 ```bash
 
     # Clonar o repositório
@@ -31,6 +32,9 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias
 
     # Entrar no diretório
     $ cd primeiro_projeto_node
+
+    #Entrar no diretório backend
+    $ cd backend
 
     # Instalar as dependências
     $ yarn install
