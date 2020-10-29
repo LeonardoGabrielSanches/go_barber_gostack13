@@ -4,7 +4,6 @@ import {
   TableColumn,
   TableForeignKey,
 } from 'typeorm';
-import { query } from 'express';
 
 export default class AlterProviderFieldToProviderID1599011202206
   implements MigrationInterface {
