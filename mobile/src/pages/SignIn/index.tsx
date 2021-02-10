@@ -1,27 +1,28 @@
 import React, { useCallback, useRef } from 'react';
 import {
   Image,
-  KeyboardAvoidingView,
-  Platform,
   View,
   ScrollView,
+  KeyboardAvoidingView,
+  Platform,
   TextInput,
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-
 import * as Yup from 'yup';
+
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
-import getValidationErrors from '../../utils/getValidationErrors';
 
 import { useAuth } from '../../hooks/auth';
+
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import LogoImg from '../../assets/logo.png';
+import logoImg from '../../assets/logo.png';
 
 import {
   Container,
@@ -41,9 +42,9 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const { signIn } = useAuth();
-
   const navigation = useNavigation();
+
+  const { signIn } = useAuth();
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -61,10 +62,15 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        await signIn({ email: data.email, password: data.password });
+        await signIn({
+          email: data.email,
+          password: data.password,
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
+
+          console.log(errors);
 
           formRef.current?.setErrors(errors);
 
@@ -73,7 +79,7 @@ const SignIn: React.FC = () => {
 
         Alert.alert(
           'Erro na autenticação',
-          'Ocorreu um erro ao fazer login, cheque as credenciais',
+          'Ocorreu um erro ao fazer login, cheque as credenciais.',
         );
       }
     },
@@ -92,7 +98,7 @@ const SignIn: React.FC = () => {
           contentContainerStyle={{ flex: 1 }}
         >
           <Container>
-            <Image source={LogoImg} />
+            <Image source={logoImg} />
 
             <View>
               <Title>Faça seu logon</Title>
@@ -108,27 +114,24 @@ const SignIn: React.FC = () => {
                 placeholder="E-mail"
                 returnKeyType="next"
                 onSubmitEditing={() => {
-                  // eslint-disable-next-line no-unused-expressions
                   passwordInputRef.current?.focus();
                 }}
               />
 
               <Input
                 ref={passwordInputRef}
-                secureTextEntry
                 name="password"
                 icon="lock"
                 placeholder="Senha"
+                secureTextEntry
                 returnKeyType="send"
                 onSubmitEditing={() => {
-                  // eslint-disable-next-line no-unused-expressions
                   formRef.current?.submitForm();
                 }}
               />
 
               <Button
                 onPress={() => {
-                  // eslint-disable-next-line no-unused-expressions
                   formRef.current?.submitForm();
                 }}
               >
@@ -136,11 +139,7 @@ const SignIn: React.FC = () => {
               </Button>
             </Form>
 
-            <ForgotPassword
-              onPress={() => {
-                console.log(1);
-              }}
-            >
+            <ForgotPassword onPress={() => {}}>
               <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
             </ForgotPassword>
           </Container>

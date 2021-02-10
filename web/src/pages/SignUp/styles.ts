@@ -25,7 +25,6 @@ const appearFromRight = keyframes`
     opacity: 0;
     transform: translateX(50px);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -72,12 +71,12 @@ export const AnimationContainer = styled.div`
     display: flex;
     align-items: center;
 
-    &:hover {
-      color: ${shade(0.2, '#ff9000')};
-    }
-
     svg {
       margin-right: 16px;
+    }
+
+    &:hover {
+      color: ${shade(0.2, '#ff9000')};
     }
   }
 `;

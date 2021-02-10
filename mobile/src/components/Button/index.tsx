@@ -7,7 +7,6 @@ interface ButtonProps extends RectButtonProperties {
   children: string;
 }
 
-// eslint-disable-next-line react/prop-types
 const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
   <Container {...rest}>
     <ButtonText>{children}</ButtonText>

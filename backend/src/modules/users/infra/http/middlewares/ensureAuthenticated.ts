@@ -5,8 +5,8 @@ import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
 interface ITokenPayload {
-  iat: string;
-  exp: string;
+  iat: number;
+  exp: number;
   sub: string;
 }
 
@@ -17,7 +17,9 @@ export default function ensureAuthenticated(
 ): void {
   const authHeader = request.headers.authorization;
 
-  if (!authHeader) throw new AppError('JWT token is missing', 401);
+  if (!authHeader) {
+    throw new AppError('JWT token is missing', 401);
+  }
 
   const [, token] = authHeader.split(' ');
 

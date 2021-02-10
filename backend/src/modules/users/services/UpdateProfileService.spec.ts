@@ -2,7 +2,6 @@ import AppError from '@shared/errors/AppError';
 
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-
 import UpdateProfileService from './UpdateProfileService';
 
 let fakeUsersRepository: FakeUsersRepository;
@@ -20,29 +19,29 @@ describe('UpdateProfile', () => {
     );
   });
 
-  it('should be able to update the profile', async () => {
+  it('should be able update the profile', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
-      email: '12@gmail.com',
-      password: '123',
+      email: 'johndoe@example.com',
+      password: '123456',
     });
 
     const updatedUser = await updateProfile.execute({
       user_id: user.id,
-      name: 'John Tre',
-      email: 'john@example.com',
+      name: 'John Trê',
+      email: 'johntre@example.com',
     });
 
-    expect(updatedUser.name).toBe('John Tre');
-    expect(updatedUser.email).toBe('john@example.com');
+    expect(updatedUser.name).toBe('John Trê');
+    expect(updatedUser.email).toBe('johntre@example.com');
   });
 
-  it('should not be able to update the profile from non-existing user', async () => {
+  it('should not be able update the profile from non-existing user', async () => {
     expect(
       updateProfile.execute({
         user_id: 'non-existing-user-id',
-        name: 'John Doe',
-        email: 'john@example.com',
+        name: 'Test',
+        email: 'test@example.com',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -51,19 +50,19 @@ describe('UpdateProfile', () => {
     await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
-      password: '123',
+      password: '123456',
     });
 
     const user = await fakeUsersRepository.create({
       name: 'Test',
-      email: 'test@gmail.com',
-      password: '123',
+      email: 'test@example.com',
+      password: '123456',
     });
 
     await expect(
       updateProfile.execute({
         user_id: user.id,
-        name: 'John Tre',
+        name: 'John Doe',
         email: 'johndoe@example.com',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -72,16 +71,16 @@ describe('UpdateProfile', () => {
   it('should be able to update the password', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
-      email: '12@gmail.com',
-      password: '123',
+      email: 'johndoe@example.com',
+      password: '123456',
     });
 
     const updatedUser = await updateProfile.execute({
       user_id: user.id,
-      name: 'John Tre',
-      email: 'john@example.com',
+      name: 'John Trê',
+      email: 'johntre@example.com',
+      old_password: '123456',
       password: '123123',
-      old_password: '123',
     });
 
     expect(updatedUser.password).toBe('123123');
@@ -90,15 +89,15 @@ describe('UpdateProfile', () => {
   it('should not be able to update the password without old password', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
-      email: '12@gmail.com',
-      password: '123',
+      email: 'johndoe@example.com',
+      password: '123456',
     });
 
     await expect(
       updateProfile.execute({
         user_id: user.id,
-        name: 'John Tre',
-        email: 'john@example.com',
+        name: 'John Trê',
+        email: 'johntre@example.com',
         password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);
@@ -107,17 +106,17 @@ describe('UpdateProfile', () => {
   it('should not be able to update the password with wrong old password', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
-      email: '12@gmail.com',
-      password: '123',
+      email: 'johndoe@example.com',
+      password: '123456',
     });
 
     await expect(
       updateProfile.execute({
         user_id: user.id,
-        name: 'John Tre',
-        email: 'john@example.com',
-        password: '123123',
+        name: 'John Trê',
+        email: 'johntre@example.com',
         old_password: 'wrong-old-password',
+        password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
